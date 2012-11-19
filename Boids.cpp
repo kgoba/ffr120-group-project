@@ -47,11 +47,22 @@ Boids::Boids(int N) {
 }
 
 void Boids::step(double dt) {
-	// for each boid:
-	//		find neighbours within radius
-	//		calculate different steering terms
-	//		update velocity/position
+    computeNeighbours();
+    computePreyForce();
+    computePredatorForce();
+    computeInteractionForce();
+    //updatePreyPopulation();
 
+    // update boid positions
+	for (unsigned i = 0; i < _boids.size(); i++) {
+		_boids[i].move(dt);
+	}
+}
+
+void Boids::computeNeighbours() {
+}
+
+void Boids::computePreyForce() {
     // different parameters - should move them elsewhere
 	double k_noise = 0.01;		// velocity noise term
 	double k_sep = 0.01;		// separation force coefficient
@@ -116,10 +127,12 @@ void Boids::step(double dt) {
 //		current.vx *= 0.99;
 //		current.vy *= 0.99;
 	}
+}
 
-	for (unsigned i = 0; i < _boids.size(); i++) {
-		_boids[i].move(dt);
-	}
+void Boids::computePredatorForce() {
+}
+
+void Boids::computeInteractionForce() {
 }
 
 // draws the Boids as OpenGL objects

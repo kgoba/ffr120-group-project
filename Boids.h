@@ -10,6 +10,8 @@
 
 #include <vector>
 
+#include "UI.h"
+
 using std::vector;
 
 // Structure containing the data of a single Boid.
@@ -26,7 +28,7 @@ struct Boid
 
 // Class that represents a collection of Boids.
 // This is also the simulation currently.
-class Boids {
+class Boids : public DrawableObject {
 public:
     // initialise with N random Boids
 	Boids(int N);
@@ -35,11 +37,16 @@ public:
 	void step(double dt);               // dt in seconds
 
 	// draw visualisation (for OpenGL)
-	void draw();
+    virtual void draw();
 
 private:
     // our collection of Boids (agents)
 	vector<Boid>	_boids;
+
+	void computeNeighbours();
+	void computePreyForce();
+    void computePredatorForce();
+    void computeInteractionForce();
 };
 
 #endif /* BOIDS_H_ */
