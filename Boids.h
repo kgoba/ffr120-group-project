@@ -24,6 +24,8 @@ struct Boid
 
 	void randomize();
 	void move(double dt);   // dt in seconds
+
+	void steer(double dt, const vector<Boid *> & neighbours, double wallDistance);
 };
 
 // Class that represents a collection of Boids.
@@ -32,6 +34,7 @@ class Boids : public DrawableObject {
 public:
     // initialise with N random Boids
 	Boids(int N);
+	~Boids();
 
     // do a timestep (update Boids)
 	void step(double dt);               // dt in seconds
@@ -41,12 +44,9 @@ public:
 
 private:
     // our collection of Boids (agents)
-	vector<Boid>	_boids;
+	vector<Boid *>	_boids;
 
 	void computeNeighbours();
-	void computePreyForce();
-    void computePredatorForce();
-    void computeInteractionForce();
 };
 
 #endif /* BOIDS_H_ */
