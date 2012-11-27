@@ -13,7 +13,7 @@
 
 
 // Global instance of our simulation class
-Boids g_sim(50);
+BoidSimulation g_sim(50);
 
 const int g_frameInterval = 40;
 

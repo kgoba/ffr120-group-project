@@ -56,3 +56,7 @@ double Random::gauss(double sigma)
 	return gauss()*sigma;
 }
 
+double Random::gauss(double mu, double sigma)
+{
+	return mu + gauss()*sigma;
+}

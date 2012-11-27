@@ -23,6 +23,11 @@ int buildPopupMenu (void);
 
 vector<DrawableObject *> g_objects;
 
+#if !defined(GLUT_WHEEL_UP)
+#  define GLUT_WHEEL_UP   3
+#  define GLUT_WHEEL_DOWN 4
+#endif
+
 // Menu identifiers - copied from sample code
 enum {
     MENU_LIGHTING = 1,
@@ -93,7 +98,7 @@ void renderObjects(void)
     glPushMatrix();
     glMaterialfv(GL_FRONT, GL_AMBIENT, colorAmbient);
     glMaterialfv(GL_FRONT, GL_SPECULAR, colorNone);
-    drawAxes();
+    //drawAxes();
     glPopMatrix();
 }
 
@@ -133,11 +138,27 @@ void mouseClickCallback(int button, int state, int x, int y)
 {
     // Respond to mouse button presses.
     // If button1 pressed, mark this state so we know in motion function.
-    if (button == GLUT_LEFT_BUTTON)
+    switch (button)
+    {
+    case GLUT_LEFT_BUTTON:
     {
         g_button1Down = (state == GLUT_DOWN);
         g_yClick = y;
         g_xClick = x;
+        break;
+    }
+    case GLUT_WHEEL_UP:
+    {
+        g_viewDistance *= 1.1;
+        break;
+    }
+    case GLUT_WHEEL_DOWN:
+    {
+        g_viewDistance /= 1.1;
+        break;
+    }
+    case GLUT_MIDDLE_BUTTON:
+        break;
     }
 }
 
