@@ -52,7 +52,7 @@ int simMain(int argc, char** argv)
         sscanf(argv[1], "%lf", &noise);
     }
     if (argc >= 3) {
-        sscanf(argv[2], "%lf", &maxtime);
+        sscanf(argv[2], "%d", &maxtime);
     }
 
     VicsekSimulation sim(100, 10, noise);
