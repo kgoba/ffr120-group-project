@@ -1,11 +1,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 #include <GL/glut.h>
 #include <GL/gl.h>
 
 #include "Boids.h"
+#include "Vicsek.h"
 #include "UI.h"
 
 // Contains the main() function and a global simulation instance,
@@ -30,8 +32,7 @@ void animateSceneCallback(int value)
     glutPostRedisplay();
 }
 
-
-int main(int argc, char** argv)
+int uiMain(int argc, char** argv)
 {
     glutInit(&argc, argv);
     uiInit();
@@ -41,4 +42,32 @@ int main(int argc, char** argv)
     // Turn the flow of control over to GLUT
     glutMainLoop();
     return 0;
+}
+
+int simMain(int argc, char** argv)
+{
+    double noise = 0.1;
+    int maxtime = 100;
+    if (argc >= 2) {
+        sscanf(argv[1], "%lf", &noise);
+    }
+    if (argc >= 3) {
+        sscanf(argv[2], "%lf", &maxtime);
+    }
+
+    VicsekSimulation sim(100, 10, noise);
+    int t = 0;
+    while (t < maxtime) {
+        sim.step();
+        t++;
+        sim.dumpCoordinates(std::cout);
+        //double m = sim.getOrderParameter();
+        //std::cout << t << '\t' << m << std::endl;
+    }
+}
+
+int main(int argc, char** argv)
+{
+    //uiMain(argc, argv);
+    simMain(argc, argv);
 }

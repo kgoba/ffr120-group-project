@@ -9,10 +9,12 @@
 #define BOIDS_H_
 
 #include <vector>
+#include <iostream>
 
 #include "UI.h"
 
 using std::vector;
+using std::ostream;
 
 struct BoidBase
 {
@@ -40,6 +42,7 @@ struct Boid : public BoidBase
 	double k_avoid;		// wall-avoidance coefficient
 	double k_keep;		// velocity control coefficient
 	double k_align;		// velocity alignment coefficient
+	double k_flee;
 	double r2_norm;		// normal separation distance squared
 	double v_norm;		// normal velocity
 
@@ -79,6 +82,8 @@ public:
 
 	// draw visualisation (for OpenGL)
     virtual void draw();
+
+    void dumpCoordinates(ostream &os);
 
 private:
     // our collection of Boids (agents)
